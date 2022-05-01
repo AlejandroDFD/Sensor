@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alejandrodfd.sensor.PrimaryController">
+   <children>
+      <TextField fx:id="bacteria" layoutX="15.0" layoutY="24.0" text="Bacteria" />
+      <TextField fx:id="tiempo" layoutX="183.0" layoutY="24.0" text="Tiempo" />
+      <TextField fx:id="potencia" layoutX="349.0" layoutY="24.0" text="Potencia" />
+      <TextField fx:id="con1" layoutX="34.0" layoutY="162.0" />
+      <TextField fx:id="con2" layoutX="34.0" layoutY="220.0" />
+      <TextField fx:id="gas1" layoutX="236.0" layoutY="162.0" />
+      <TextField fx:id="gas2" layoutX="236.0" layoutY="220.0" />
+      <Text layoutX="34.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Concentración (ppm)" />
+      <Button layoutX="424.0" layoutY="188.0" mnemonicParsing="false" onAction="#botonDetectar" text="Detect" />
+      <Button layoutX="34.0" layoutY="308.0" mnemonicParsing="false" onAction="#botonStart" text="Start" />
+      <Text layoutX="246.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gas" />
+      <Text fx:id="te" layoutX="109.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" />
+   </children>
+</AnchorPane>
