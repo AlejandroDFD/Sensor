@@ -22,12 +22,14 @@ public class NewMain {
         
         ArrayList<SerialPort> port=Config.setSensor();
         ArrayList<String> gas= new ArrayList();
-        for(SerialPort i:port){
-            gas.add(Config.gas(i));
-        }
-        for(String i:gas){
+        
+        byte[] med=Config.medir(port.get(1));
+        
+        for(byte i:med){
             System.out.println(i);
         }
+        
+        
         
 }
 }

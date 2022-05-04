@@ -40,7 +40,7 @@ public class util {
         return i;
     }
     public static int ppm(int[] b){
-        return b[2]*256+b[3];
+        return (b[6]*256+b[7]);
     }
     public static String salida(int i,int seg){
         return seg+";"+i;
