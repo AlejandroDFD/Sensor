@@ -10,14 +10,17 @@
       <TextField fx:id="bacteria" layoutX="15.0" layoutY="24.0" text="Bacteria" />
       <TextField fx:id="tiempo" layoutX="183.0" layoutY="24.0" text="Tiempo" />
       <TextField fx:id="potencia" layoutX="349.0" layoutY="24.0" text="Potencia" />
-      <TextField fx:id="con1" layoutX="34.0" layoutY="162.0" />
-      <TextField fx:id="con2" layoutX="34.0" layoutY="220.0" />
-      <TextField fx:id="gas1" layoutX="236.0" layoutY="162.0" />
-      <TextField fx:id="gas2" layoutX="236.0" layoutY="220.0" />
+      <Text fx:id="con1" layoutX="34.0" layoutY="162.0" />
+      <Text fx:id="con2" layoutX="34.0" layoutY="220.0" />
+      <Text fx:id="gas1" layoutX="236.0" layoutY="162.0" />
+      <Text fx:id="gas2" layoutX="236.0" layoutY="220.0" />
       <Text layoutX="34.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Concentración (ppm)" />
-      <Button layoutX="424.0" layoutY="188.0" mnemonicParsing="false" onAction="#botonDetectar" text="Detect" />
-      <Button layoutX="34.0" layoutY="308.0" mnemonicParsing="false" onAction="#botonStart" text="Start" />
+      <Button fx:id="botonStart" layoutX="34.0" layoutY="308.0" mnemonicParsing="false" onAction="#botonStart" text="Start" />
       <Text layoutX="246.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gas" />
-      <Text fx:id="te" layoutX="109.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" />
+      <Text fx:id="te" layoutX="109.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="En Proceso" visible="false" />
+      <Text layoutX="254.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="temperatura" />
+      <Text fx:id="temp" layoutX="254.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <Text layoutX="377.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Humedad" />
+      <Text fx:id="hum" layoutX="377.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
    </children>
 </AnchorPane>

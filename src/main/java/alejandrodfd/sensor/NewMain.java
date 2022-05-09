@@ -20,34 +20,24 @@ public class NewMain {
         // TODO code application logic here
         
         
-        ArrayList<SerialPort> port=Config.setSensor();
-        ArrayList<String> gas= new ArrayList();
-        
-        byte[] med=Config.medir(port.get(1));
-        
-        for(byte i:med){
-            System.out.print(i+",");
-        }
-        int[] conv=util.conversor(med);
-        System.out.println(" ");
-        
-        for(int i:conv){
-            System.out.print(i+",");
-        }
-        System.out.println(conv[6]*256+conv[7]);
-        
-        SerialPort p=port.get(1);
-        byte[] men={(byte)0xD1};
-        byte[] readBuffer=new byte[13];
-        p.openPort();
-        p.writeBytes(men, men.length);
-        p.readBytes(readBuffer, readBuffer.length);
-        p.closePort();
-        
-        for(byte i:readBuffer){
-            System.out.print(i+",");
-        }
-        
+        Dispositivo.setSensor();
+       Dispositivo d1=new Dispositivo(0);
+       
+       int[] m=d1.medir();
+       int tempH=m[8];
+       int tempL=m[9];
+       
+       int t=tempH*(int)Math.pow(2, 8);
+       
+       System.out.println(t|tempL);
+       System.out.println(t);
+       System.out.println(tempL);
+       
+       
+       
+  
+       
+       
         
 }
 }

@@ -16,11 +16,21 @@ import java.util.Calendar;
  */
 public class util {
     
+    /**
+     * guarda una cadena de caracteres en un archivo
+     * @param f
+     * @param s
+     * @throws IOException 
+     */
     public static void guardar(File f,String s) throws IOException{
         PrintWriter pw=new PrintWriter(new FileWriter(f,true));
         pw.println(s);
         pw.close();
     }
+    
+    /**
+     *Genera una carpeta con la fecha actual como nombre
+     */
     private static void crearCarpeta(){
         Calendar fecha = Calendar.getInstance();
         int año = fecha.get(Calendar.YEAR);
@@ -39,12 +49,40 @@ public class util {
         }
         return i;
     }
-    public static int ppm(int[] b){
-        return (b[6]*256+b[7]);
+    
+    /**
+     * Devuelve la concentración en ppm de una medición para un dispositivo.
+     * @param medicion medición
+     * @param d dispositivo
+     * @return 
+     */
+    public static double ppm(int[] medicion,Dispositivo d){
+        return (medicion[6]*256+medicion[7])/Math.pow(10, (double)d.getDecimal());
     }
-    public static String salida(int i,int seg){
-        return seg+";"+i;
+    public static float temperatura(int[] medicion,Dispositivo d){
+        return ((medicion[8]*(int)Math.pow(2, 8))|medicion[9])/100;
     }
+    
+    public static float humedad(int[] medicion,Dispositivo d){
+        return ((medicion[10]*(int)Math.pow(2, 8))|medicion[11])/100;
+    }
+    
+    /**
+     * Adapta la cadena de caracteres para una salida CSV
+     * @param i medicioón ppm
+     * @param seg segundos del experimento
+     * @return String
+     */
+    public static String salida(double i,int seg,float temp, float hum){
+        return seg+";"+i+";"+temp+";"+hum;
+    }
+    
+    /**
+     * Creación de un documento con la cabecera de datos.
+     * @param nombre
+     * @return
+     * @throws IOException 
+     */
     public static File nuevoDoc(String nombre) throws IOException{
         Calendar fecha = Calendar.getInstance();
         int año = fecha.get(Calendar.YEAR);
@@ -55,14 +93,14 @@ public class util {
         
         File f=new File(nom+"\\"+nombre+".csv");
         PrintWriter pw=new PrintWriter(new FileWriter(f));
-        pw.println("tiempo(s);concentracion");
+        pw.println("Tiempo(s);Concentracion (ppm);Temperatura;Humedad");
         pw.close();
         return f;
     }
     
     /**
      * Obtiene los segundos actuales
-     * @return devulve un int con los segundos actuales
+     * @return devuelve un int con los segundos actuales
      */
     public static int tiempoSegundos(){
         int salida;

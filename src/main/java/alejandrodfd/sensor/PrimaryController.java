@@ -4,7 +4,6 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import com.fazecast.jSerialComm.*;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,132 +11,150 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 public class PrimaryController implements Initializable {
 
     @FXML
-    private  TextField bacteria;
+    private TextField bacteria;
     @FXML
-    private  TextField tiempo;
+    private TextField tiempo;
     @FXML
-    private  TextField potencia;
+    private TextField potencia;
     @FXML
-    private  TextField gas1;
+    private Text gas1;
     @FXML
-    private  TextField gas2;
+    private Text gas2;
     @FXML
-    private  TextField con1;
+    private Text con1;
     @FXML
-    private  TextField con2;
+    private Text con2;
     @FXML
-    private  Text te;
-    private boolean marcha=true;
-    private boolean entrada=false;
+    private Text te;
+    @FXML
+    private Text hum;
+    @FXML
+    private Text temp;
+    @FXML
+    private Button botonStart;
     
-    private int  tiempoI,tiempoF;
-    
-    Task aparece = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-           Platform.runLater(new Runnable(){
-               @Override
-               public void run() {
-                   te.setVisible(true);
-               }
-           }); 
-            return null;
-        }
+    private ArrayList<Dispositivo> d = new ArrayList();
 
-    };
-    
-    
-    public static ArrayList<SerialPort> sensores;
-    
-    
-    public  int getTiempo(){
+    private int tiempoI, tiempoF;
+    Thread hilo;
+
+
+
+    public int getTiempo() {
         return Integer.parseInt(this.tiempo.getText());
     }
-    public ArrayList<SerialPort> getSenores(){
-        return PrimaryController.sensores;
+
+    public void setCon1(double i) {
+        this.con1.setText(Double.toString(i));
     }
-    @FXML
-    private void botonDetectar(ActionEvent event){
-        ArrayList<SerialPort> s=Config.setSensor();
-        ArrayList<String> gas=new ArrayList();
-        for(SerialPort i:s){
-            gas.add(Config.gas(i));
-        }
-        
-        for(String si:gas){
-            int num=gas.indexOf(si);
-            if(num==0)this.gas1.setText(gas.get(0));
-            if(num==1)this.gas2.setText(gas.get(1));
-        }
-        PrimaryController.sensores=s;
+
+    public void setCon2(double i) {
+        this.con2.setText(Double.toString(i));
     }
-    public void setCon1(int i){
-        this.con1.setText(Integer.toString(i));
+
+    public void setHum(float h) {
+        this.hum.setText(Float.toString(h));
     }
-    public  void setCon2(int i){
-        this.con2.setText(Integer.toString(i));
+
+    public void setTemp(float t) {
+        this.temp.setText(Float.toString(t));
     }
+
     @FXML
     private void botonStart(ActionEvent event) throws IOException, InterruptedException {
-        new Thread(marc).start();
-
-    }
-    
-    Task marc=    new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    te.setVisible(true);
-                    File f1 = util.nuevoDoc(nombreArchivo1());
-                    File f2 = util.nuevoDoc(nombreArchivo2());
-                    tiempoI = util.tiempoSegundos();
-                    tiempoF = util.tiempoSegundos();
-                    int c1;
-                    int c2;
-                    int seg = tiempoF - tiempoI;
-                    while (seg < getTiempo()) {
-                        tiempoF = util.tiempoSegundos();
-                        seg = tiempoF - tiempoI;
-                        c1 = util.ppm(util.conversor(Config.medir(getSenores().get(0))));
-                        c2 = util.ppm(util.conversor(Config.medir(getSenores().get(1))));
-                        util.guardar(f1, util.salida(c1, seg));
-                        util.guardar(f2, util.salida(c2, seg));
-                        setCon1(c1);
-                        setCon2(c2);
-                        Thread.sleep(500);
-                        te.setText(Integer.toString((getTiempo()-seg)));
-
-                    }
-
-                    te.setVisible(false);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                return null;
-
-            }
-        };
+       /*if(hilo==null||!hilo.isAlive()){
+        hilo=new Thread(marc);
+        hilo.start();
         
-    
-    public  String nombreArchivo1(){
-        return potencia.getText()+"-"+tiempo.getText()+gas1.getText()+bacteria.getText();
+        botonStart.setText("Stop");
+       }
+       else{
+           hilo.interrupt();
+           botonStart.setText("Start");
+       }
+        
+*/
+       new Thread(marc).start();
     }
-    public  String nombreArchivo2(){
-        return potencia.getText()+"-"+tiempo.getText()+gas2.getText()+bacteria.getText();
+
+    Task marc = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+            try {
+                
+                te.setVisible(true);
+                File f1 = util.nuevoDoc(nombreArchivo1());
+                File f2 = util.nuevoDoc(nombreArchivo2());
+                tiempoI = util.tiempoSegundos();
+                tiempoF = util.tiempoSegundos();
+                double c1;
+                double c2;
+                float temp, hum;
+
+                int seg = tiempoF - tiempoI;
+                while (seg < getTiempo()) {
+                    tiempoF = util.tiempoSegundos();
+                    seg = tiempoF - tiempoI;
+
+                    //mediciones
+                    c1 = util.ppm(d.get(0).medir(), d.get(0));
+                    c2 = util.ppm(d.get(1).medir(), d.get(1));
+                    temp = util.temperatura(d.get(0).medir(), d.get(0));
+                    hum = util.humedad(d.get(0).medir(), d.get(0));
+
+                    //guardar los datos
+                    util.guardar(f1, util.salida(c1, seg, temp, hum));
+                    util.guardar(f2, util.salida(c2, seg, temp, hum));
+                    setCon1(c1);
+                    setCon2(c2);
+                    setTemp(temp);
+                    setHum(hum);
+
+                    Thread.sleep(700);
+                    te.setText(Integer.toString((getTiempo() - seg)));
+
+                }
+
+                te.setVisible(false);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
+            System.exit(0);
+            
+            return null;
+
+        }
+        
+        
+    };
+
+    public String nombreArchivo1() {
+        return potencia.getText() + "-" + tiempo.getText() + gas1.getText() + bacteria.getText();
+    }
+
+    public String nombreArchivo2() {
+        return potencia.getText() + "-" + tiempo.getText() + gas2.getText() + bacteria.getText();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO
-        
-        
+        Dispositivo.setSensor();
+
+        for (int i = 0; i < Dispositivo.sensoresDetectados(); i++) {
+            d.add(new Dispositivo(i));
+        }
+
+        this.gas1.setText(d.get(0).getTipo());
+        this.gas2.setText(d.get(1).getTipo());
+
     }
-    
-    
-    
+
 }
