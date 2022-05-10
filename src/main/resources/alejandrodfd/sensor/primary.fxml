@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alejandrodfd.sensor.PrimaryController">
    <children>
       <TextField fx:id="bacteria" layoutX="15.0" layoutY="24.0" text="Bacteria" />
-      <TextField fx:id="tiempo" layoutX="183.0" layoutY="24.0" text="Tiempo" />
+      <TextField fx:id="tiempo" layoutX="183.0" layoutY="24.0" text="Tiempo(min)" />
       <TextField fx:id="potencia" layoutX="349.0" layoutY="24.0" text="Potencia" />
       <Text fx:id="con1" layoutX="34.0" layoutY="162.0" />
       <Text fx:id="con2" layoutX="34.0" layoutY="220.0" />

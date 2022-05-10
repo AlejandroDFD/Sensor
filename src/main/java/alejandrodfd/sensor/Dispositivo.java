@@ -19,7 +19,7 @@ public class Dispositivo {
     
     private SerialPort puerto;
     private String tipo;
-    private byte decimal;
+    private int decimal;
 
     public Dispositivo(int index) {
         this.puerto=sensores.get(index);
@@ -31,12 +31,17 @@ public class Dispositivo {
     
     
     
-
+    /**
+     * Set de la posición decimal 
+     */
     private void setDecimal() {
-        this.decimal = configuracion[6];
+        this.decimal = (configuracion[4]|(configuracion[5]<<1)|(configuracion[6]<<2)|(configuracion[7]<<3))/100;
     }
-
-    public byte getDecimal() {
+    /**
+     * Obtener la posición decimal de la medición
+     * @return 
+     */
+    public int getDecimal() {
         return decimal;
     }
     
@@ -72,7 +77,9 @@ public class Dispositivo {
         }
         Dispositivo.sensores = s;
     }
-
+    /**
+     * Set del tipo de gas medido
+     */
     private void setTipo() {
         byte[] men = {(byte) 0xD1};
         byte[] readBuffer = new byte[13];
@@ -89,35 +96,52 @@ public class Dispositivo {
         }
 
     }
+    /**
+     * 
+     * @return Retorna String del tipo de gas medido
+     */
     public String getTipo(){
         return this.tipo;
     }
-
+    /**
+     * set del Puerto del dispositivo
+     * @param puerto 
+     */
     private void setPuerto(SerialPort puerto) {
         this.puerto = puerto;
     }
-
+    /**
+     * get del puerto del dispositivo
+     * 
+     * @return 
+     */
     public SerialPort getPuerto() {
         return puerto;
     }
-
+    /**
+     * seto de la configuarción del sipositivo con el SerialPort
+     * @param p 
+     */
     private void setConfiguracion(SerialPort p) {
         byte[] men = {(byte) 0xD1};
-        byte[] readBuffer = new byte[13];
+        byte[] readBuffer = new byte[9];
         p.openPort();
         p.writeBytes(men, men.length);
         p.readBytes(readBuffer, readBuffer.length);
         p.closePort();
         this.configuracion=readBuffer;
     }
-
+    
     public byte[] getConfiguracion() {
         return configuracion;
     }
     
     
     
-
+    /**
+     * Realizar una medición por metodo pregunta/respuesta
+     * @return 
+     */
     public int[] medir() {
         byte[] readB = new byte[13];
         this.puerto.openPort();
@@ -126,6 +150,10 @@ public class Dispositivo {
         return util.conversor(readB);
     }
     
+    /**
+     * Cantidad de sensores detectados.
+     * @return 
+     */
     public static int sensoresDetectados(){
         return Dispositivo.sensores.size();
     }

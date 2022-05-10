@@ -39,6 +39,12 @@ public class util {
         String nombre=año+"-"+ mes+"-"+dia;
         new File(nombre).mkdir();
     }
+    
+    /**
+     * Convierte el array de byte en int
+     * @param b
+     * @return 
+     */
     public static int[] conversor(byte[] b){
         int[] i=new int[b.length];
         int c=0;
@@ -59,10 +65,22 @@ public class util {
     public static double ppm(int[] medicion,Dispositivo d){
         return (medicion[6]*256+medicion[7])/Math.pow(10, (double)d.getDecimal());
     }
+    
+    /**
+     * obtención de la temperatura
+     * @param medicion
+     * @param d
+     * @return 
+     */
     public static float temperatura(int[] medicion,Dispositivo d){
         return ((medicion[8]*(int)Math.pow(2, 8))|medicion[9])/100;
     }
-    
+    /**
+     * obtención de la humedad 
+     * @param medicion array de la medición
+     * @param d dispositivo que se utiliza
+     * @return 
+     */
     public static float humedad(int[] medicion,Dispositivo d){
         return ((medicion[10]*(int)Math.pow(2, 8))|medicion[11])/100;
     }

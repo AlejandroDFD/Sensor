@@ -47,7 +47,7 @@ public class PrimaryController implements Initializable {
 
 
     public int getTiempo() {
-        return Integer.parseInt(this.tiempo.getText());
+        return 60*Integer.parseInt(this.tiempo.getText());
     }
 
     public void setCon1(double i) {

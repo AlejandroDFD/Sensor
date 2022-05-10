@@ -8,7 +8,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import java.util.ArrayList;
 
 /**
- *
+ *Clase utilizada para la pruebas de puesta en marcha
  * @author aleja
  */
 public class NewMain {
@@ -19,25 +19,16 @@ public class NewMain {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        
-        Dispositivo.setSensor();
-       Dispositivo d1=new Dispositivo(0);
-       
-       int[] m=d1.medir();
-       int tempH=m[8];
-       int tempL=m[9];
-       
-       int t=tempH*(int)Math.pow(2, 8);
-       
-       System.out.println(t|tempL);
-       System.out.println(t);
-       System.out.println(tempL);
+       ArrayList<Dispositivo> d=new ArrayList(); 
+      Dispositivo.setSensor();
+
+        for (int i = 0; i < Dispositivo.sensoresDetectados(); i++) {
+            d.add(new Dispositivo(i));
+        }
+
+       System.out.println("decimal:"+d.get(0).getTipo()+d.get(0).getDecimal());
+       System.out.println("decimal:"+d.get(1).getTipo()+d.get(1).getDecimal());
        
        
-       
-  
-       
-       
-        
 }
 }
