@@ -7,9 +7,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alejandrodfd.sensor.PrimaryController">
    <children>
-      <TextField fx:id="bacteria" layoutX="15.0" layoutY="24.0" text="Bacteria" />
-      <TextField fx:id="tiempo" layoutX="183.0" layoutY="24.0" text="Tiempo(min)" />
-      <TextField fx:id="potencia" layoutX="349.0" layoutY="24.0" text="Potencia" />
+      <TextField fx:id="bacteria" layoutX="403.0" layoutY="37.0" />
+      <TextField fx:id="tiempo" layoutX="183.0" layoutY="37.0" text="0" />
+      <TextField fx:id="potencia" layoutX="15.0" layoutY="37.0" />
       <Text fx:id="con1" layoutX="34.0" layoutY="162.0" />
       <Text fx:id="con2" layoutX="34.0" layoutY="220.0" />
       <Text fx:id="gas1" layoutX="236.0" layoutY="162.0" />
@@ -22,5 +22,10 @@
       <Text fx:id="temp" layoutX="254.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
       <Text layoutX="377.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Humedad" />
       <Text fx:id="hum" layoutX="377.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <TextField fx:id="tiempoSegundos" layoutX="183.0" layoutY="82.0" text="0" />
+      <Text layoutX="23.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Potencia" />
+      <Text layoutX="407.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bacteria" />
+      <Text layoutX="183.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiempo(min)" />
+      <Text layoutX="183.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiempo(segundos)" />
    </children>
 </AnchorPane>

@@ -21,6 +21,8 @@ public class PrimaryController implements Initializable {
     @FXML
     private TextField tiempo;
     @FXML
+    private TextField tiempoSegundos;
+    @FXML
     private TextField potencia;
     @FXML
     private Text gas1;
@@ -48,6 +50,9 @@ public class PrimaryController implements Initializable {
 
     public int getTiempo() {
         return 60*Integer.parseInt(this.tiempo.getText());
+    }
+    public int getTiempoSeg(){
+        return Integer.parseInt(this.tiempoSegundos.getText());
     }
 
     public void setCon1(double i) {
@@ -98,7 +103,10 @@ public class PrimaryController implements Initializable {
                 float temp, hum;
 
                 int seg = tiempoF - tiempoI;
-                while (seg < getTiempo()) {
+                int tiempoFinal=getTiempo()+getTiempoSeg();
+                
+               
+                while (seg < tiempoFinal) {
                     tiempoF = util.tiempoSegundos();
                     seg = tiempoF - tiempoI;
 
@@ -117,7 +125,7 @@ public class PrimaryController implements Initializable {
                     setHum(hum);
 
                     Thread.sleep(700);
-                    te.setText(Integer.toString((getTiempo() - seg)));
+                    te.setText(Integer.toString((tiempoFinal - seg)));
 
                 }
 
@@ -136,11 +144,13 @@ public class PrimaryController implements Initializable {
     };
 
     public String nombreArchivo1() {
-        return potencia.getText() + "-" + tiempo.getText() + gas1.getText() + bacteria.getText();
+        
+        
+        return potencia.getText() + "-" + tiempo.getText()+"'"+tiempoSegundos.getText()+"''" + gas1.getText() + bacteria.getText();
     }
 
     public String nombreArchivo2() {
-        return potencia.getText() + "-" + tiempo.getText() + gas2.getText() + bacteria.getText();
+        return potencia.getText() + "-" + tiempo.getText()+"'"+tiempoSegundos.getText() +"''"+ gas2.getText() + bacteria.getText();
     }
 
     @Override

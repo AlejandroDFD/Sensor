@@ -110,7 +110,7 @@ public class util {
         if(!(new File(nom).isDirectory()))util.crearCarpeta();  
         
         File f=new File(nom+"\\"+nombre+".csv");
-        PrintWriter pw=new PrintWriter(new FileWriter(f));
+        PrintWriter pw=new PrintWriter(new FileWriter(f,true));
         pw.println("Tiempo(s);Concentracion (ppm);Temperatura;Humedad");
         pw.close();
         return f;
