@@ -11,12 +11,27 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
 public class PrimaryController implements Initializable {
 
+     @FXML
+    TableView<Dispositivo> tabla;    
+    @FXML
+    TableColumn<Dispositivo,String> tipo;
+    @FXML
+    TableColumn<Dispositivo,Double> cConc;
+    @FXML
+    TableColumn<Dispositivo,Float> cTemp;
+    @FXML
+    TableColumn<Dispositivo,Float> cHum;
+    
     @FXML
     private TextField bacteria;
     @FXML
@@ -25,24 +40,17 @@ public class PrimaryController implements Initializable {
     private TextField tiempoSegundos;
     @FXML
     private TextField potencia;
-    @FXML
-    private Text gas1;
-    @FXML
-    private Text gas2;
-    @FXML
-    private Text con1;
-    @FXML
-    private Text con2;
+    
     @FXML
     private Text te;
-    @FXML
-    private Text hum;
-    @FXML
-    private Text temp;
+    
     @FXML
     private Button botonStart;
+    @FXML
+    private LineChart graph;
    
     private ArrayList<Dispositivo> d = new ArrayList();
+    private ArrayList<LineChart.Series> series= new ArrayList();
 
     private int tiempoI, tiempoF;
     Thread hilo=null;
@@ -56,21 +64,7 @@ public class PrimaryController implements Initializable {
         return Integer.parseInt(this.tiempoSegundos.getText());
     }
 
-    public void setCon1(double i) {
-        this.con1.setText(Double.toString(i));
-    }
 
-    public void setCon2(double i) {
-        this.con2.setText(Double.toString(i));
-    }
-
-    public void setHum(float h) {
-        this.hum.setText(Float.toString(h));
-    }
-
-    public void setTemp(float t) {
-        this.temp.setText(Float.toString(t));
-    }
 
     @FXML
     private void botonStart(ActionEvent event) throws IOException, InterruptedException {
@@ -114,10 +108,9 @@ public class PrimaryController implements Initializable {
                     util.guardar(f1, util.salida(d.get(0).getConcentracion(), seg, d.get(0).getTemp(), d.get(0).getHum()));
                     util.guardar(f2, util.salida(d.get(1).getConcentracion(), seg, d.get(1).getTemp(), d.get(1).getHum()));
                     
-                    setCon1(d.get(0).getConcentracion());
-                    setCon2(d.get(1).getConcentracion());
-                    setTemp(d.get(0).getTemp());
-                    setHum(d.get(0).getHum());
+                    tabla.refresh();
+                    series.get(0).getData().add(new LineChart.Data(Integer.toString(seg),d.get(0).getConcentracion()));
+                    series.get(1).getData().add(new LineChart.Data(Integer.toString(seg),d.get(1).getConcentracion()));
 
                     Thread.sleep(700);
                     te.setText(Integer.toString((tiempoFinal - seg)));
@@ -141,11 +134,11 @@ public class PrimaryController implements Initializable {
     public String nombreArchivo1() {
         
         
-        return potencia.getText() + "-" + tiempo.getText()+"'"+tiempoSegundos.getText()+"''" + gas1.getText() + bacteria.getText();
+        return potencia.getText() + "-" + tiempo.getText()+"'"+tiempoSegundos.getText()+"''" + d.get(0).getTipo() + bacteria.getText();
     }
 
     public String nombreArchivo2() {
-        return potencia.getText() + "-" + tiempo.getText()+"'"+tiempoSegundos.getText() +"''"+ gas2.getText() + bacteria.getText();
+        return potencia.getText() + "-" + tiempo.getText()+"'"+tiempoSegundos.getText() +"''"+ d.get(1).getTipo()  + bacteria.getText();
     }
 
     @Override
@@ -155,16 +148,19 @@ public class PrimaryController implements Initializable {
 
         for (int i = 0; i < Dispositivo.sensoresDetectados(); i++) {
             d.add(new Dispositivo(i));
+            series.add(new LineChart.Series());
+            series.get(i).setName(d.get(i).getTipo());
+            graph.getData().add(series.get(i));
         }
-        if(Dispositivo.sensoresDetectados()==2){
-           this.gas1.setText(d.get(0).getTipo());
-           this.gas2.setText(d.get(1).getTipo()); 
-        }else{
-           this.gas1.setText("no detectados");
-           this.gas2.setText("no detectados");
-        }
+        tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        cConc.setCellValueFactory(new PropertyValueFactory<>("concentracion"));
+        cTemp.setCellValueFactory(new PropertyValueFactory<>("temp"));
+        cHum.setCellValueFactory(new PropertyValueFactory<>("hum"));
+        tabla.getItems().addAll(d);
         
-
+        for(Dispositivo Disp:d){
+            Disp.medir();
+        }
     }
 
 }
