@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -10,27 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alejandrodfd.sensor.PrimaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alejandrodfd.sensor.PrimaryController">
    <children>
-      <TextField fx:id="bacteria" layoutX="403.0" layoutY="37.0" />
+      <TextField fx:id="bacteria" layoutX="15.0" layoutY="82.0" promptText="Bacteria" />
       <TextField fx:id="tiempo" layoutX="183.0" layoutY="37.0" text="0" />
-      <TextField fx:id="potencia" layoutX="15.0" layoutY="37.0" />
-      <Button fx:id="botonStart" layoutX="34.0" layoutY="308.0" mnemonicParsing="false" onAction="#botonStart" text="Start" />
+      <TextField fx:id="potencia" layoutX="15.0" layoutY="37.0" promptText="Potencia" />
+      <Button fx:id="botonStart" layoutX="77.0" layoutY="275.0" mnemonicParsing="false" onAction="#botonStart" prefHeight="37.0" prefWidth="67.0" text="Start" />
       <Text fx:id="te" layoutX="109.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="En Proceso" visible="false" />
       <TextField fx:id="tiempoSegundos" layoutX="183.0" layoutY="82.0" text="0" />
-      <Text layoutX="23.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Potencia" />
-      <Text layoutX="407.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bacteria" />
       <Text layoutX="183.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiempo(min)" />
       <Text layoutX="183.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiempo(segundos)" />
-      <LineChart fx:id="graph" layoutX="357.0" layoutY="63.0" prefHeight="320.0" prefWidth="391.0">
-        <xAxis>
-          <CategoryAxis label="Tiempo" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis label="Concentracion" side="LEFT" />
-        </yAxis>
-      </LineChart>
-      <TableView fx:id="tabla" layoutX="16.0" layoutY="116.0" prefHeight="133.0" prefWidth="302.0">
+      <TableView fx:id="tabla" layoutX="16.0" layoutY="116.0" prefHeight="129.0" prefWidth="304.0">
         <columns>
           <TableColumn fx:id="tipo" prefWidth="75.0" text="Tipo" />
           <TableColumn fx:id="cConc" prefWidth="75.0" text="Conc." />

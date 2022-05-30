@@ -9,12 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -43,8 +41,7 @@ public class SecondController implements Initializable {
     Button bMedir;
     @FXML
     TextField nombreExp;
-    @FXML
-    LineChart<Integer,Double> graph;
+    
     
     
     private Thread hilo;
@@ -53,7 +50,7 @@ public class SecondController implements Initializable {
     
     private ArrayList<File> f=new ArrayList();
     private ArrayList<Dispositivo> d = new ArrayList();
-    private ArrayList<LineChart.Series> series= new ArrayList();
+    
     
     private void iniciarDocs() throws IOException{
         int i=0;
@@ -62,6 +59,7 @@ public class SecondController implements Initializable {
             i++;
         }
     }
+    
     
     Task marc = new Task<Void>() {
         @Override
@@ -76,7 +74,7 @@ public class SecondController implements Initializable {
                 for(Dispositivo Disp:d){
                     Disp.medir();
                     util.guardar(f.get(d.indexOf(Disp)), util.salida(Disp.getConcentracion(), segundos, Disp.getTemp(), Disp.getHum()));
-                    series.get(d.indexOf(Disp)).getData().add(new LineChart.Data(Integer.toString(segundos),Disp.getConcentracion()));
+                    
                 
                 }
                 tabla.refresh();         
@@ -123,9 +121,7 @@ public class SecondController implements Initializable {
 
         for (int i = 0; i < Dispositivo.sensoresDetectados(); i++) {
             d.add(new Dispositivo(i));
-            series.add(new LineChart.Series());
-            series.get(i).setName(d.get(i).getTipo());
-            graph.getData().add(series.get(i));
+            
         }
         
         tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));

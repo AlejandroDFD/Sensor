@@ -47,10 +47,10 @@ public class PrimaryController implements Initializable {
     @FXML
     private Button botonStart;
     @FXML
-    private LineChart graph;
+    
    
     private ArrayList<Dispositivo> d = new ArrayList();
-    private ArrayList<LineChart.Series> series= new ArrayList();
+    
 
     private int tiempoI, tiempoF;
     Thread hilo=null;
@@ -109,8 +109,7 @@ public class PrimaryController implements Initializable {
                     util.guardar(f2, util.salida(d.get(1).getConcentracion(), seg, d.get(1).getTemp(), d.get(1).getHum()));
                     
                     tabla.refresh();
-                    series.get(0).getData().add(new LineChart.Data(Integer.toString(seg),d.get(0).getConcentracion()));
-                    series.get(1).getData().add(new LineChart.Data(Integer.toString(seg),d.get(1).getConcentracion()));
+                    
 
                     Thread.sleep(700);
                     te.setText(Integer.toString((tiempoFinal - seg)));
@@ -148,9 +147,7 @@ public class PrimaryController implements Initializable {
 
         for (int i = 0; i < Dispositivo.sensoresDetectados(); i++) {
             d.add(new Dispositivo(i));
-            series.add(new LineChart.Series());
-            series.get(i).setName(d.get(i).getTipo());
-            graph.getData().add(series.get(i));
+            
         }
         tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         cConc.setCellValueFactory(new PropertyValueFactory<>("concentracion"));
