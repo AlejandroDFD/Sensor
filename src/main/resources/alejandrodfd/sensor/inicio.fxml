@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="210.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alejandrodfd.sensor.InicioController">
+   <children>
+      <Button fx:id="boton2Sen" layoutX="81.0" layoutY="109.0" mnemonicParsing="false" onAction="#boton2SenAction" text="2 Sensores" />
+      <Button fx:id="botonTodo" layoutX="188.0" layoutY="109.0" mnemonicParsing="false" onAction="#botonTodoAction" text="Todos los sensores" />
+      <Text layoutX="130.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecciona modo" wrappingWidth="99.13671875" />
+   </children>
+</AnchorPane>

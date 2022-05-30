@@ -15,11 +15,16 @@ public class Dispositivo {
 
     final private static byte[] gasHumTem = {(byte) 0xFF, 0x00, (byte) 0x87, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79};
     private static ArrayList<SerialPort> sensores;
+    
     private byte[] configuracion;
     
     private SerialPort puerto;
     private String tipo;
     private int decimal;
+    private int[] medir;
+    
+    private double concentracion;
+    private float temp,hum;
 
     public Dispositivo(int index) {
         this.puerto=sensores.get(index);
@@ -142,12 +147,15 @@ public class Dispositivo {
      * Realizar una medición por metodo pregunta/respuesta
      * @return 
      */
-    public int[] medir() {
+    public void medir() {
         byte[] readB = new byte[13];
         this.puerto.openPort();
         this.puerto.writeBytes(gasHumTem, gasHumTem.length);
         this.puerto.readBytes(readB, readB.length);
-        return util.conversor(readB);
+        this.medir= util.conversor(readB);
+        this.temperatura();
+        this.humedad();
+        this.ppm();
     }
     
     /**
@@ -158,4 +166,38 @@ public class Dispositivo {
         return Dispositivo.sensores.size();
     }
     
+    /**
+     * Devuelve la concentración en ppm de una medición para un dispositivo.
+     * 
+     */
+    private void ppm(){
+        
+        this.concentracion= (this.medir[6]*256+this.medir[7])/Math.pow(10, (double)this.getDecimal());
+    }
+    public double getConcentracion(){
+        return this.concentracion;
+    }
+    
+    /**
+     * obtención de la temperatura
+     
+     * @return 
+     */
+    private void temperatura(){
+        this.temp= (float)((int)((this.medir[8]<<8)|this.medir[9]))/100;
+    }
+    
+    public float getTemp(){
+        return this.temp;
+    }
+    /**
+     * obtención de la humedad 
+     * 
+     */
+    private void humedad(){
+        this.hum= (float)((int)((this.medir[10]<<8)|this.medir[11]))/100;
+    }
+    public float getHum(){
+        return this.hum;
+    }
 }

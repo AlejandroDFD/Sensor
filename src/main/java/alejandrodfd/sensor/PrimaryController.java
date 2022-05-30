@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
 import javafx.scene.text.Text;
 
 public class PrimaryController implements Initializable {
@@ -40,12 +41,12 @@ public class PrimaryController implements Initializable {
     private Text temp;
     @FXML
     private Button botonStart;
-    
+   
     private ArrayList<Dispositivo> d = new ArrayList();
 
     private int tiempoI, tiempoF;
-    Thread hilo;
-
+    Thread hilo=null;
+    
 
 
     public int getTiempo() {
@@ -73,19 +74,14 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void botonStart(ActionEvent event) throws IOException, InterruptedException {
-       /*if(hilo==null||!hilo.isAlive()){
-        hilo=new Thread(marc);
-        hilo.start();
-        
-        botonStart.setText("Stop");
+       if(hilo==null||!hilo.isAlive()){
+           hilo=new Thread(marc);
+           hilo.start();
+           botonStart.setText("Cerrar");
+       }else{
+           System.exit(0);
        }
-       else{
-           hilo.interrupt();
-           botonStart.setText("Start");
-       }
-        
-*/
-       new Thread(marc).start();
+       
     }
 
     Task marc = new Task<Void>() {
@@ -111,18 +107,17 @@ public class PrimaryController implements Initializable {
                     seg = tiempoF - tiempoI;
 
                     //mediciones
-                    c1 = util.ppm(d.get(0).medir(), d.get(0));
-                    c2 = util.ppm(d.get(1).medir(), d.get(1));
-                    temp = util.temperatura(d.get(0).medir(), d.get(0));
-                    hum = util.humedad(d.get(0).medir(), d.get(0));
+                    d.get(0).medir();
+                    d.get(1).medir();
 
                     //guardar los datos
-                    util.guardar(f1, util.salida(c1, seg, temp, hum));
-                    util.guardar(f2, util.salida(c2, seg, temp, hum));
-                    setCon1(c1);
-                    setCon2(c2);
-                    setTemp(temp);
-                    setHum(hum);
+                    util.guardar(f1, util.salida(d.get(0).getConcentracion(), seg, d.get(0).getTemp(), d.get(0).getHum()));
+                    util.guardar(f2, util.salida(d.get(1).getConcentracion(), seg, d.get(1).getTemp(), d.get(1).getHum()));
+                    
+                    setCon1(d.get(0).getConcentracion());
+                    setCon2(d.get(1).getConcentracion());
+                    setTemp(d.get(0).getTemp());
+                    setHum(d.get(0).getHum());
 
                     Thread.sleep(700);
                     te.setText(Integer.toString((tiempoFinal - seg)));
@@ -161,9 +156,14 @@ public class PrimaryController implements Initializable {
         for (int i = 0; i < Dispositivo.sensoresDetectados(); i++) {
             d.add(new Dispositivo(i));
         }
-
-        this.gas1.setText(d.get(0).getTipo());
-        this.gas2.setText(d.get(1).getTipo());
+        if(Dispositivo.sensoresDetectados()==2){
+           this.gas1.setText(d.get(0).getTipo());
+           this.gas2.setText(d.get(1).getTipo()); 
+        }else{
+           this.gas1.setText("no detectados");
+           this.gas2.setText("no detectados");
+        }
+        
 
     }
 

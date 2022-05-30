@@ -56,34 +56,7 @@ public class util {
         return i;
     }
     
-    /**
-     * Devuelve la concentración en ppm de una medición para un dispositivo.
-     * @param medicion medición
-     * @param d dispositivo
-     * @return 
-     */
-    public static double ppm(int[] medicion,Dispositivo d){
-        return (medicion[6]*256+medicion[7])/Math.pow(10, (double)d.getDecimal());
-    }
-    
-    /**
-     * obtención de la temperatura
-     * @param medicion
-     * @param d
-     * @return 
-     */
-    public static float temperatura(int[] medicion,Dispositivo d){
-        return ((medicion[8]*(int)Math.pow(2, 8))|medicion[9])/100;
-    }
-    /**
-     * obtención de la humedad 
-     * @param medicion array de la medición
-     * @param d dispositivo que se utiliza
-     * @return 
-     */
-    public static float humedad(int[] medicion,Dispositivo d){
-        return ((medicion[10]*(int)Math.pow(2, 8))|medicion[11])/100;
-    }
+
     
     /**
      * Adapta la cadena de caracteres para una salida CSV
