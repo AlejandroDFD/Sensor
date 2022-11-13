@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alejandrodfd.sensor.SecondController">
    <children>
@@ -18,5 +19,7 @@
       </TableView>
       <Button fx:id="bMedir" layoutX="33.0" layoutY="284.0" mnemonicParsing="false" onAction="#botonMedir" text="Medir" />
       <TextField fx:id="nombreExp" layoutX="33.0" layoutY="244.0" promptText="NombreExperimento" />
+      <TextField fx:id="muestreo" layoutX="215.0" layoutY="244.0" promptText="intervalo de muestreo" />
+      <Text layoutX="215.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Muestreo (s)" wrappingWidth="101.0" />
    </children>
 </AnchorPane>

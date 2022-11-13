@@ -62,8 +62,11 @@ public class PrimaryController implements Initializable {
     public int getTiempo() {
         return 60*Integer.parseInt(this.tiempo.getText());
     }
-    public long getMuestreo() {
-        return 1000*Long.parseLong(this.muestreo.getText());
+    private long getMuestreo(){
+        long muestra=Long.parseLong(muestreo.getText());
+
+        if (muestra>0)return 1000*muestra;
+        return 500;
     }
     public int getTiempoSeg(){
         return Integer.parseInt(this.tiempoSegundos.getText());

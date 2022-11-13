@@ -50,7 +50,8 @@ public class SecondController implements Initializable {
     
     private ArrayList<File> f=new ArrayList();
     private ArrayList<Dispositivo> d = new ArrayList();
-    
+    @FXML
+    private TextField muestreo;
     
     private void iniciarDocs() throws IOException{
         int i=0;
@@ -59,7 +60,12 @@ public class SecondController implements Initializable {
             i++;
         }
     }
-    
+    private long getMuestreo(){
+        long muestra=Long.parseLong(muestreo.getText());
+
+        if (muestra>0)return 1000*muestra;
+        return 500;
+    }
     
     Task marc = new Task<Void>() {
         @Override
@@ -83,7 +89,7 @@ public class SecondController implements Initializable {
                 
                 
                 
-                Thread.sleep(500);
+                Thread.sleep(getMuestreo());
                 
             }
             
