@@ -54,11 +54,16 @@ public class PrimaryController implements Initializable {
 
     private int tiempoI, tiempoF;
     Thread hilo=null;
+    @FXML
+    private TextField muestreo;
     
 
 
     public int getTiempo() {
         return 60*Integer.parseInt(this.tiempo.getText());
+    }
+    public long getMuestreo() {
+        return 1000*Long.parseLong(this.muestreo.getText());
     }
     public int getTiempoSeg(){
         return Integer.parseInt(this.tiempoSegundos.getText());
@@ -88,6 +93,7 @@ public class PrimaryController implements Initializable {
                 File f2 = util.nuevoDoc(nombreArchivo2());
                 tiempoI = util.tiempoSegundos();
                 tiempoF = util.tiempoSegundos();
+
                 double c1;
                 double c2;
                 float temp, hum;
@@ -111,8 +117,8 @@ public class PrimaryController implements Initializable {
                     tabla.refresh();
                     
 
-                    Thread.sleep(700);
                     te.setText(Integer.toString((tiempoFinal - seg)));
+                    Thread.sleep(getMuestreo());
 
                 }
 
